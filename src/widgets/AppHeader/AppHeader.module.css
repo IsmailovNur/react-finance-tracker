@@ -1,0 +1,18 @@
+.header {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 10px;
+}
+.headerTop{
+
+}
+
+.mainLink {
+  text-decoration: none;
+  font-size: 24px;
+}
+
+.logoName {
+  font-size: 32px;
+  font-weight: 700;
+}
