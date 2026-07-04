@@ -1,6 +1,6 @@
 import { Form, Input, Select, Typography } from "antd";
 
-import styles from "./CreateCategoryPage.module.css";
+import styles from "./CategoryFormPage.module.css";
 import AppForm from "../../features/AppForm/AppForm.tsx";
 import {
   CATEGORY_TYPES,
@@ -10,33 +10,63 @@ import type { AppDispatch } from "../../app/store.ts";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createCategory,
-  selectCategoryIsLoading
+  selectCategoryIsLoading, selectCategoryList, updateCategory
 } from "../../entities/Category/CategorySlice.ts";
+import { useNavigate, useParams } from "react-router-dom";
+import { AppRoutes } from "../../routing/routes.ts";
+import { useEffect } from "react";
 
 const {Title} = Typography;
-const CreateCategoryPage = () => {
+
+const CategoryFormPage = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch<AppDispatch>();
 
+  const navigate = useNavigate();
+  const {id} = useParams<{ id: string }>();
+
   const isLoading = useSelector(selectCategoryIsLoading);
+  const categories = useSelector(selectCategoryList);
+
+  const isEdit = Boolean(id);
+
+  useEffect(() => {
+    if (isEdit && id) {
+      const currentCategory = categories.find(cat => cat.id === id);
+      if (currentCategory) {
+        form.setFieldsValue({
+          name: currentCategory.name,
+          type: currentCategory.type,
+        });
+      }
+    } else {
+      form.resetFields();
+    }
+  }, [isEdit, id, categories, form]);
 
   const onFinish = async (values: Category) => {
     try {
-      await dispatch(createCategory(values));
+      if (isEdit && id) {
+        await dispatch(updateCategory({id, data: values}));
+      } else {
+        await dispatch(createCategory(values));
+      }
+      
       form.resetFields();
+      navigate(AppRoutes.categories);
     } catch (error) {
       console.error("CreateCategory error:", error);
     }
-  }
+  };
 
   return (
     <div className={styles.CreateCategoryPage}>
-      <Title level={1}>CreateCategoryPage</Title>
+      <Title level={1}>{isEdit ? "Edit Category" : "Create Category"}</Title>
 
       <AppForm
         form={form}
-        title="Create Category"
-        formBtn="Save"
+        title={isEdit ? "Edit Category details" : "Create Category"}
+        formBtn={isEdit ? "Update" : "Save"}
         isLoading={isLoading}
         onFinish={onFinish}
       >
@@ -74,4 +104,4 @@ const CreateCategoryPage = () => {
   );
 };
 
-export default CreateCategoryPage;
+export default CategoryFormPage;

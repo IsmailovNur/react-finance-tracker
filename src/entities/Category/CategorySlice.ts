@@ -42,6 +42,34 @@ export const fetchCategories = createAsyncThunk<ApiCategory[], void, {
   }
 );
 
+export const deleteCategory = createAsyncThunk<string, string, {
+  rejectValue: string
+}>(
+  'category/delete',
+  async (id, {rejectWithValue}) => {
+    try {
+      await axiosInstance.delete(`/categories/${id}.json`);
+      return id;
+    } catch {
+      return rejectWithValue('Failed to delete category');
+    }
+  }
+);
+
+export const updateCategory = createAsyncThunk<void, {
+  id: string;
+  data: Category
+}, { rejectValue: string }>(
+  'category/update',
+  async ({id, data}, {rejectWithValue}) => {
+    try {
+      await axiosInstance.put(`/categories/${id}.json`, data);
+    } catch {
+      return rejectWithValue('Failed to update category');
+    }
+  }
+);
+
 const CategorySlice = createSlice({
   name: 'category',
   initialState,
@@ -72,7 +100,30 @@ const CategorySlice = createSlice({
       .addCase(fetchCategories.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload || 'Something went wrong';
-      });
+      })
+
+      .addCase(deleteCategory.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteCategory.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.categoryList = state.categoryList.filter(cat => cat.id !== action.payload);
+      })
+      .addCase(deleteCategory.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || 'Something went wrong';
+      })
+
+      .addCase(updateCategory.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(updateCategory.fulfilled, state => {
+        state.isLoading = false;
+      })
+      .addCase(updateCategory.rejected, state => {
+        state.isLoading = false;
+      })
 
   }
 })

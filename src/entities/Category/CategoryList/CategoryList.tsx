@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import {
+  deleteCategory,
   fetchCategories,
   selectCategoryIsLoading,
   selectCategoryList
@@ -11,18 +12,34 @@ import Spinner from "../../../shared/Spinner/Spinner.tsx";
 import CategoryItem from "./CategoryItem.tsx";
 
 import styles from "./Category.module.css";
+import { AppRoutes } from "../../../routing/routes.ts";
+import { useNavigate } from "react-router-dom";
 
 const CategoryList = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const categories = useSelector(selectCategoryList);
-  console.log(categories);
+  const navigate = useNavigate();
 
   const isLoading = useSelector(selectCategoryIsLoading);
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
+
+  const handleDelete = async (id: string) => {
+    try {
+      await dispatch(deleteCategory(id));
+    } catch (error) {
+      console.error("Failed to delete category:", error);
+    }
+  };
+
+  const handleEdit = (id: string) => {
+    const editUrl = AppRoutes.editCategory.replace(':id', id);
+    navigate(editUrl);
+  };
+
 
   if (isLoading) return <Spinner />;
 
@@ -34,6 +51,8 @@ const CategoryList = () => {
           id={category.id}
           name={category.name}
           type={category.type}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
         />
       ))}
     </div>

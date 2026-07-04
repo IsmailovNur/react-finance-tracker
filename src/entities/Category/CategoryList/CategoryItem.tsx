@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 import type { CategoryType } from "../types.ts";
 
-import { Button, Typography } from "antd";
+import { Button, Popconfirm, Typography } from "antd";
 import styles from "./Category.module.css";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
@@ -11,9 +11,13 @@ interface CategoryItemProps {
   name: string;
   type: CategoryType;
   id: string;
+  onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
 }
 
-const CategoryItem: FC<CategoryItemProps> = ({name, type, id}) => {
+const CategoryItem: FC<CategoryItemProps> = (props) => {
+  const {name, type, id, onEdit, onDelete} = props;
+
   return (
     <div className={styles.CategoryItem}>
       <Text className={styles.categoryName}>{name}</Text>
@@ -23,16 +27,27 @@ const CategoryItem: FC<CategoryItemProps> = ({name, type, id}) => {
       <div className={styles.categoryButtons}>
         <Button
           icon={<EditOutlined />}
+          onClick={() => onEdit(id)}
         >
           Edit
         </Button>
-        <Button
-          danger
-          icon={<DeleteOutlined />}
-          onClick={() => console.log("Delete category", id)}
+
+        <Popconfirm
+          title="Delete the category"
+          description="Are you want to delete this category?"
+          onConfirm={() => onDelete(id)}
+          okText="Yes"
+          cancelText="No"
+          okButtonProps={{danger: true}}
         >
-          Delete
-        </Button>
+          <Button
+            danger
+            icon={<DeleteOutlined />}
+          >
+            Delete
+          </Button>
+        </Popconfirm>
+
       </div>
     </div>
   );
