@@ -9,13 +9,30 @@ const {Text} = Typography;
 const AppHeader = () => {
   return (
     <header className={styles.header}>
-      <div className={styles.headerTop}>
-        <NavLink
-          to={AppRoutes.main}
-          className={styles.mainLink}
-        >
-          <Text className={styles.logoName}>TV Shows</Text>
-        </NavLink>
+      <div className={styles.headerInner}>
+        <div className={styles.headerLeft}>
+          <NavLink
+            to={AppRoutes.main}
+            className={styles.mainLink}
+          >
+            <Text className={styles.logoName}>Finance</Text>
+          </NavLink>
+        </div>
+
+        <div className={styles.headerRight}>
+          <NavLink
+            to={AppRoutes.categories}
+            className={styles.headerLink}
+          >
+            Categories
+          </NavLink>
+          <NavLink
+            to={AppRoutes.createCategory}
+            className={styles.headerLink}
+          >
+            Add
+          </NavLink>
+        </div>
 
       </div>
     </header>

@@ -1,10 +1,5 @@
 .header {
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 0 10px;
-}
-.headerTop{
-
+  border-bottom: 2px solid #ededed;
 }
 
 .mainLink {
@@ -15,4 +10,32 @@
 .logoName {
   font-size: 32px;
   font-weight: 700;
+}
+
+.headerInner {
+  height: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.headerLeft {
+  margin-right: 10px;
+}
+
+.headerRight {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.headerLink {
+  text-decoration: none;
+  color: #ffffffd9;
+}
+
+.headerLink.active {
+  color: yellow;
 }
