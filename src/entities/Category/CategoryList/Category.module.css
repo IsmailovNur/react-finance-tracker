@@ -1,0 +1,30 @@
+.CategoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.CategoryItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid #555555;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.categoryName{
+  font-weight: 700;
+}
+
+.categoryType{
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.categoryButtons{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}

@@ -10,8 +10,12 @@ export interface Category {
   name: string;
 }
 
+export interface ApiCategory extends Category {
+  id: string;
+}
+
 export interface CategoryState {
-  categoryList: Category[];
+  categoryList: ApiCategory[];
   isLoading: boolean;
   error: string | null;
 }
