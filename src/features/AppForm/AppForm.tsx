@@ -4,6 +4,9 @@ import styles from "./AppForm.module.css";
 import { SaveOutlined } from "@ant-design/icons";
 import type { FC, ReactNode } from "react";
 import type { Category } from "../../entities/Category/types.ts";
+import type {
+  TransactionFormValues
+} from "../../entities/Transaction/types.ts";
 
 const {Title} = Typography;
 
@@ -11,7 +14,7 @@ interface AppFormProps {
   form: FormInstance,
   title: string,
   formBtn: string,
-  onFinish: (values: Category) => void,
+  onFinish: (values: Category | TransactionFormValues) => void;
   children: ReactNode;
   isLoading?: boolean;
 }

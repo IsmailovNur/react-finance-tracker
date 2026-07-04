@@ -27,10 +27,10 @@ const AppHeader = () => {
             Categories
           </NavLink>
           <NavLink
-            to={AppRoutes.createCategory}
+            to={AppRoutes.createTransaction}
             className={styles.headerLink}
           >
-            Add
+            Add Transaction
           </NavLink>
         </div>
 

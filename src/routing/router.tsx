@@ -4,8 +4,8 @@ import NotFoundPage from "../pages/NotFoundPage/NotFoundPage.tsx";
 import { AppRoutes } from "./routes.ts";
 import MainLayout from "../pages/MainLayout/MainLayout.tsx";
 import CategoryFormPage from "../pages/CategoryFormPage/CategoryFormPage.tsx";
-import CreateTransactionPage
-  from "../pages/CreateTransactionPage/CreateTransactionPage.tsx";
+import TransactionFormPage
+  from "../pages/CreateTransactionPage/TransactionFormPage.tsx";
 import CategoriesPage from "../pages/CategoriesPage/CategoriesPage.tsx";
 
 export const router = createBrowserRouter([
@@ -26,7 +26,11 @@ export const router = createBrowserRouter([
       },
       {
         path: AppRoutes.createTransaction,
-        element: <CreateTransactionPage />,
+        element: <TransactionFormPage />,
+      },
+      {
+        path: AppRoutes.editTransaction,
+        element: <TransactionFormPage />,
       },
       {
         path: AppRoutes.categories,

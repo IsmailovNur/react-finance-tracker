@@ -1,6 +1,5 @@
 import { Form, Input, Select, Typography } from "antd";
 
-import styles from "./CategoryFormPage.module.css";
 import AppForm from "../../features/AppForm/AppForm.tsx";
 import {
   CATEGORY_TYPES,
@@ -15,6 +14,11 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { AppRoutes } from "../../routing/routes.ts";
 import { useEffect } from "react";
+
+import styles from "./CategoryFormPage.module.css";
+import type {
+  TransactionFormValues
+} from "../../entities/Transaction/types.ts";
 
 const {Title} = Typography;
 
@@ -44,12 +48,14 @@ const CategoryFormPage = () => {
     }
   }, [isEdit, id, categories, form]);
 
-  const onFinish = async (values: Category) => {
+  const onFinish = async (values: Category | TransactionFormValues) => {
     try {
+      const categoryData = values as Category;
+
       if (isEdit && id) {
-        await dispatch(updateCategory({id, data: values}));
+        await dispatch(updateCategory({id, data: categoryData}));
       } else {
-        await dispatch(createCategory(values));
+        await dispatch(createCategory(categoryData));
       }
       
       form.resetFields();
@@ -79,7 +85,7 @@ const CategoryFormPage = () => {
             message: 'Please enter valid word',
           }]}
         >
-          <Input />
+          <Input    placeholder="Category name ..." />
         </Form.Item>
 
         <Form.Item

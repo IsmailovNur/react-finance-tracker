@@ -1,0 +1,39 @@
+.TransactionList {
+
+}
+
+.totalBlock {
+  color: #ededed;
+  margin-bottom: 20px;
+}
+
+.TransactionItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid #555555;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+
+.transactionDate {
+
+}
+
+.transactionCategory {
+
+}
+
+.incomeAmount {
+
+}
+
+.expenseAmount {
+
+}
+
+.transactionButtons {
+
+}
