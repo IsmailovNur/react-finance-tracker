@@ -1,11 +1,22 @@
 .TransactionList {
-
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .totalBlock {
   color: #ededed;
   margin-bottom: 20px;
 }
+
+.positive {
+  color: green;
+}
+
+.negative {
+  color: #af1b1b;
+}
+
 
 .TransactionItem {
   display: flex;
@@ -19,21 +30,28 @@
 
 
 .transactionDate {
-
+  margin-right: 20px;
 }
 
 .transactionCategory {
+  font-weight: 700;
+  margin-right: auto;
 
+}
+
+.income {
+  margin-right: 20px;
 }
 
 .incomeAmount {
-
+  color: green;
 }
 
 .expenseAmount {
-
+  color: #af1b1b;
 }
 
 .transactionButtons {
-
+  display: flex;
+  gap: 10px;
 }

@@ -56,6 +56,20 @@ export const updateTransaction = createAsyncThunk<ApiTransaction, {
   }
 );
 
+export const deleteTransaction = createAsyncThunk<string, string, {
+  rejectValue: string
+}>(
+  'transaction/delete',
+  async (id, {rejectWithValue}) => {
+    try {
+      await axiosInstance.delete(`/transactions/${id}.json`);
+      return id;
+    } catch {
+      return rejectWithValue('Failed to delete transaction');
+    }
+  }
+);
+
 
 const TransactionSlice = createSlice({
   name: 'transaction',
@@ -97,6 +111,10 @@ const TransactionSlice = createSlice({
       })
       .addCase(updateTransaction.rejected, state => {
         state.isLoading = false;
+      })
+
+      .addCase(deleteTransaction.fulfilled, (state, action) => {
+        state.transactionList = state.transactionList.filter(t => t.id !== action.payload);
       });
 
   }

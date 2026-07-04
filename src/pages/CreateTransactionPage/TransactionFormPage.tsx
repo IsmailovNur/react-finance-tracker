@@ -41,18 +41,33 @@ const TransactionFormPage = () => {
 
   const prevTypeRef = useRef<string | undefined>(undefined);
 
+  const isDataLoaded = transactions.length > 0 && categories.length > 0;
 
   useEffect(() => {
     dispatch(fetchCategories());
-    console.log(categories);
   }, [dispatch]);
 
   useEffect(() => {
+    if (isEdit && id && isDataLoaded) {
+      const currentTransaction = transactions.find(t => t.id === id);
+      if (!currentTransaction) return;
+
+      const currentCat = categories.find(c => c.id === currentTransaction.categoryId);
+      const transactionType = currentCat ? currentCat.type : undefined;
+
+      prevTypeRef.current = transactionType;
+
+      form.setFieldsValue({
+        type: transactionType,
+        category: currentTransaction.categoryId,
+        amount: currentTransaction.amount,
+      });
+    }
 
     if (!isEdit) {
       form.resetFields();
     }
-  }, [isEdit, form]);
+  }, [isEdit, id, transactions, categories, form, isDataLoaded]);
 
   useEffect(() => {
     if (prevTypeRef.current !== undefined && prevTypeRef.current !== selectedType) {
@@ -63,7 +78,7 @@ const TransactionFormPage = () => {
 
   const filteredCategories = selectedType
     ? categories.filter(cat => cat.type === selectedType)
-    : categories;
+    : [];
 
   const onFinish = async (values: Category | TransactionFormValues) => {
     try {
@@ -125,7 +140,7 @@ const TransactionFormPage = () => {
         >
           <Select
             placeholder="Select category ..."
-            disabled={false}
+            disabled={!selectedType}
             options={filteredCategories.map(cat => ({
               value: cat.id,
               label: cat.name

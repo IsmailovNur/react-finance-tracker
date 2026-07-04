@@ -2,6 +2,7 @@ import type { AppDispatch } from "../../../app/store";
 import styles from "./Transaction.module.css"
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteTransaction,
   fetchTransactions,
   selectTransactionIsLoading,
   selectTransactionList
@@ -13,6 +14,8 @@ import {
 import { useEffect } from "react";
 import Spinner from "../../../shared/Spinner/Spinner.tsx";
 import TransactionItem from "./TransactionItem.tsx";
+import { AppRoutes } from "../../../routing/routes.ts";
+import { useNavigate } from "react-router-dom";
 
 const TransactionList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,6 +23,7 @@ const TransactionList = () => {
   const transactions = useSelector(selectTransactionList);
   const categories = useSelector(selectCategoryList);
   const isTxLoading = useSelector(selectTransactionIsLoading);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchTransactions());
@@ -58,10 +62,8 @@ const TransactionList = () => {
             type={transaction.categoryData!.type}
             amount={transaction.amount}
             createdAt={transaction.createdAt}
-            onDelete={() => {
-              console.log("delete")
-            }}
-            onEdit={(id) => console.log("edit", id)}
+            onDelete={(id) => dispatch(deleteTransaction(id))}
+            onEdit={(id) => navigate(AppRoutes.editTransaction.replace(':id', id))}
           />
         ))}
       </div>

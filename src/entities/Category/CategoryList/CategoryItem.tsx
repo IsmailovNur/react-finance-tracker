@@ -17,11 +17,15 @@ interface CategoryItemProps {
 
 const CategoryItem: FC<CategoryItemProps> = (props) => {
   const {name, type, id, onEdit, onDelete} = props;
+  const isIncome = type === "income";
 
   return (
     <div className={styles.CategoryItem}>
       <Text className={styles.categoryName}>{name}</Text>
-      <Text strong className={styles.categoryType}>
+      <Text
+        strong
+        className={`${styles.categoryType} ${isIncome ? styles.incomeAmount : styles.expenseAmount}`}
+      >
         {type}
       </Text>
       <div className={styles.categoryButtons}>

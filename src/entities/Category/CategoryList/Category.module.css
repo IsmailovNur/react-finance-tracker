@@ -14,17 +14,25 @@
   padding: 20px;
 }
 
-.categoryName{
+.categoryName {
   font-weight: 700;
 }
 
-.categoryType{
+.categoryType {
   margin-left: auto;
   margin-right: 20px;
 }
 
-.categoryButtons{
+.categoryButtons {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.incomeAmount {
+  color: green;
+}
+
+.expenseAmount {
+  color: #af1b1b;
 }

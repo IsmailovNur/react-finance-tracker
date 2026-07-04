@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 
 import styles from "./Transaction.module.css";
 
-const { Text } = Typography;
+const {Text} = Typography;
 
 interface TransactionItemProps {
   id: string;
@@ -18,31 +18,39 @@ interface TransactionItemProps {
 }
 
 const TransactionItem: FC<TransactionItemProps> = (props) => {
-  const { id, categoryName, type, amount, createdAt, onEdit, onDelete } = props;
+  const {id, categoryName, type, amount, createdAt, onEdit, onDelete} = props;
   const isIncome = type === 'income';
 
   return (
     <div className={styles.TransactionItem}>
-      <Text className={styles.transactionDate}>{dayjs(createdAt).format('DD.MM.YYYY HH:mm')}</Text>
+      <Text type="secondary" className={styles.transactionDate}>{dayjs(createdAt).format('DD.MM.YYYY HH:mm')}</Text>
       <Text className={styles.transactionCategory}>{categoryName}</Text>
       <Text
         strong
-        className={isIncome ? styles.incomeAmount : styles.expenseAmount}
+        className={`${styles.income} ${isIncome ? styles.incomeAmount : styles.expenseAmount}`}
       >
         {isIncome ? `+${amount}` : `-${amount}`} KGS
       </Text>
 
       <div className={styles.transactionButtons}>
-        <Button icon={<EditOutlined />} onClick={() => onEdit(id)} />
+        <Button
+          size="large"
+          icon={<EditOutlined />}
+          onClick={() => onEdit(id)}
+        />
         <Popconfirm
           title="Delete transaction"
           description="Are you sure you want to delete this transaction?"
           onConfirm={() => onDelete(id)}
           okText="Yes"
           cancelText="No"
-          okButtonProps={{ danger: true }}
+          okButtonProps={{danger: true}}
         >
-          <Button danger icon={<DeleteOutlined />} />
+          <Button
+            size="large"
+            danger
+            icon={<DeleteOutlined />}
+          />
         </Popconfirm>
       </div>
     </div>

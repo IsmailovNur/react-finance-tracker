@@ -22,13 +22,17 @@ const AppHeader = () => {
         <div className={styles.headerRight}>
           <NavLink
             to={AppRoutes.categories}
-            className={styles.headerLink}
+            className={({ isActive }) =>
+              isActive ? `${styles.headerLink} ${styles.activeLink}` : styles.headerLink
+            }
           >
             Categories
           </NavLink>
           <NavLink
             to={AppRoutes.createTransaction}
-            className={styles.headerLink}
+            className={({ isActive }) =>
+              isActive ? `${styles.headerLink} ${styles.activeLink}` : styles.headerLink
+            }
           >
             Add Transaction
           </NavLink>
