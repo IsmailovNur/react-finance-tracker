@@ -3,6 +3,7 @@ import { Button, Card, Form, Typography } from "antd";
 import styles from "./AppForm.module.css";
 import { SaveOutlined } from "@ant-design/icons";
 import type { FC, ReactNode } from "react";
+import type { Category } from "../../entities/Category/types.ts";
 
 const {Title} = Typography;
 
@@ -10,12 +11,13 @@ interface AppFormProps {
   form: FormInstance,
   title: string,
   formBtn: string,
-  onFinish: () => void,
+  onFinish: (values: Category) => void,
   children: ReactNode;
+  isLoading?: boolean;
 }
 
 const AppForm: FC<AppFormProps> = (props) => {
-  const {form, title, formBtn, onFinish, children} = props;
+  const {form, title, formBtn, onFinish, children, isLoading} = props;
 
   return (
     <Card className={styles.AppForm}>
@@ -31,6 +33,7 @@ const AppForm: FC<AppFormProps> = (props) => {
           type="primary"
           htmlType="submit"
           block
+          loading={isLoading}
           icon={<SaveOutlined />}
         >
           {formBtn}
